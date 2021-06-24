@@ -35,7 +35,7 @@ if(process.env.NODE_ENV === 'production'){
 }
 
 app.use(cors({
-    origin: ['http://localhost:3000', 'sportscocoa.com', 'http://13.124.38.106'],
+    origin: ['http://localhost:3000', 'sportscocoa.com'],
     credentials: true,
 }));
 
@@ -47,6 +47,11 @@ app.use(session({
     saveUninitialized: false,
     resave: false,
     secret: process.env.COOKIE_SECRET,
+    cookie: {
+        httpOnly: true,
+        secure: false,
+        domain: process.env.NODE_ENV === 'production' && '.sportscocoa.com'
+    }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
