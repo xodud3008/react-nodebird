@@ -63,9 +63,8 @@ router.post('/', isLoggedIn, upload.none(), async (req, res,next) => {
                 model: Comment,
                 include: [{
                     model: User, // 댓글 작성자
-                    attributes: ['id', 'nickname'],
-                    order: [['createdAt', 'DESC']],
-                }]
+                    attributes: ['id', 'nickname']
+                }],
             }, {
                 model: User, // 게시글 작성자
                 attributes: ['id', 'nickname'],
@@ -82,7 +81,7 @@ router.post('/', isLoggedIn, upload.none(), async (req, res,next) => {
     }
 });
 
-router.post('/images', isLoggedIn, upload.array('image'), async (req, res, next) => {
+router.post('/images', isLoggedIn, upload.array('image'), (req, res, next) => {
     console.log(req.files);
     res.json(req.files.map((v) => v.location.replace(/\/original\//, '/thumb/')));
 });
